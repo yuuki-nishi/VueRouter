@@ -4,7 +4,10 @@
     </h1>
     <div v-if="cityInfo">{{ cityInfo }}
         <div v-for="item in cityInfo" :key="item.ID">
-            名前:{{ item.Name }}
+            名前:{{ item.name.String }}<button @click="ShowData(item.id)" >ShowData</button>
+            <div class="district" v-if="item.id == tmpID">
+                {{ item.district.String }}{{ item.ID }}{{ tmpID }}
+            </div><div v-else></div>
             <!--ここまでが各要素の記述-->
         </div>
     </div>
@@ -25,7 +28,8 @@ export default {
     }
   },
   setup(props) {
-    const cityInfo = ref()
+    const cityInfo = ref();
+    const tmpID = ref(-1);
     onMounted(async () => {
         console.log(props.CountryID)
         console.log("aaa")
@@ -33,7 +37,11 @@ export default {
         console.log(res.data)
         cityInfo.value = res.data;
     })
-    return { cityInfo }
+    
+    const ShowData = (id) =>{
+        tmpID.value = id;
+    };
+    return { cityInfo , ShowData,tmpID}
   }
 };
 </script>
