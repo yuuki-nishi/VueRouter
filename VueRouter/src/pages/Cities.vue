@@ -4,7 +4,7 @@
     </h1>
     <div v-if="cityInfo">{{ cityInfo }}
         <div v-for="item in cityInfo" :key="item.ID">
-            名前:<router-link :to="`/citiesfromcountry/${item.ID.int}`">{{ item.Name.String }}</router-link>
+            名前:{{ item.Name }}
             <!--ここまでが各要素の記述-->
         </div>
     </div>
@@ -27,6 +27,8 @@ export default {
   setup(props) {
     const cityInfo = ref()
     onMounted(async () => {
+        console.log(props.CountryID)
+        console.log("aaa")
         const res = await axios.get("/api/citiesfromcountry/" + props.CountryID)
         console.log(res.data)
         cityInfo.value = res.data;
